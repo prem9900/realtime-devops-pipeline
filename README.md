@@ -3,12 +3,14 @@
 This project demonstrates a  real-time CI/CD pipeline that automates the entire flow from code push to deployment in Kubernetes using GitHub Actions, Docker, Argo CD, and GitOps principles.
 
 
+
 * 📌 Features
 - CI/CD pipeline built using GitHub Actions
 - Automated **Docker build** and push to Docker Hub
 - GitOps-based deployment using Argo CD
 - Declarative Kubernetes manifests
 - Real-time sync of changes via GitHub and Argo CD
+
 
 
 * ⚙️ How It Works
@@ -22,8 +24,10 @@ This project demonstrates a  real-time CI/CD pipeline that automates the entire 
 4.   Kubernetes pulls the new image and deploys the updated app.
 
 
+
 * 📌 CI/CD Architecture Diagram
 ![CI/CD Pipeline Architecture](architecture/ci-cd-architecture.png)
+
 
 
 * 🧱 Technologies Used
@@ -37,11 +41,13 @@ This project demonstrates a  real-time CI/CD pipeline that automates the entire 
 |   Git              | Version Control               |
 
 
+
  * 🔐 Secrets Required in GitHub
 Make sure to add the following secrets to your GitHub repository:
 - `DOCKER_USERNAME` – Your Docker Hub username
 - `DOCKER_PASSWORD` – Your Docker Hub password or access token
 - `GITOPS_REPO_TOKEN` – GitHub token to push changes to your GitOps repo
+
 
 
 * 🚀 Deployment Manifest (`gitops-repo/deployment.yaml`)
