@@ -1,4 +1,4 @@
-  🚀 CI/CD Pipeline Demo with GitHub Actions, Docker, GitOps, and Argo CD
+++  🚀 CI/CD Pipeline Demo with GitHub Actions, Docker, GitOps, and Argo CD
 
 This project demonstrates a  real-time CI/CD pipeline  that automates the entire flow from code push to deployment in Kubernetes using  GitHub Actions,Docker, Argo CD , and GitOps principles.
 
@@ -103,7 +103,7 @@ CMD ["npm", "start"]
 
 
 
-# 📦 GitHub Actions Workflow (`.github/workflows/ci-cd-pipeline.yaml`)
+# 📦 GitHub Actions Workflow (`.github/workflows/frist-actions.yaml`)
 
 This GitHub Actions workflow performs the following:
 
