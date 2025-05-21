@@ -1,56 +1,64 @@
-* 🚀 CI/CD Pipeline Demo with GitHub Actions, Docker, GitOps, and Argo CD
+  🚀 CI/CD Pipeline Demo with GitHub Actions, Docker, GitOps, and Argo CD
 
-This project demonstrates a  real-time CI/CD pipeline that automates the entire flow from code push to deployment in Kubernetes using GitHub Actions, Docker, Argo CD, and GitOps principles.
-
-
-
-* 📌 Features
-- CI/CD pipeline built using GitHub Actions
-- Automated **Docker build** and push to Docker Hub
-- GitOps-based deployment using Argo CD
-- Declarative Kubernetes manifests
-- Real-time sync of changes via GitHub and Argo CD
+This project demonstrates a  real-time CI/CD pipeline  that automates the entire flow from code push to deployment in Kubernetes using  GitHub Actions,Docker, Argo CD , and GitOps principles.
 
 
 
-* ⚙️ How It Works
-1.   Developer pushes code  to the `main` branch.
-2.   GitHub Actions  triggers the pipeline:
-   - Builds Docker image.
-   - Pushes image to Docker Hub.
-   - Clones GitOps repo and updates the `deployment.yaml` with the new image tag.
-   - Commits and pushes changes to GitOps repo.
-3.   Argo CD  automatically detects changes in GitOps repo.
-4.   Kubernetes pulls the new image and deploys the updated app.
+# 📌 Features
+
+* CI/CD pipeline powered by  GitHub Actions
+* Automated  Docker image build  and  push to Docker Hub
+* GitOps-based deployment using  Argo CD
+* Declarative Kubernetes manifests
+* Real-time sync of changes between GitHub and Kubernetes via Argo CD
 
 
 
-* 📌 CI/CD Architecture Diagram
+# ⚙️ How It Works
+
+1. Developer pushes code to the `main` branch.
+2. GitHub Actions triggers the pipeline:
+
+   * Builds the Docker image.
+   * Pushes the image to  Docker Hub.
+   * Clones the GitOps repo and updates the `deployment.yaml` with the new image tag.
+   * Commits and pushes changes to the GitOps repo.
+3.  Argo CD detects changes in the GitOps repo automatically.
+4.  Kubernetes pulls the new image and deploys the updated application.
+
+
+
+# 📌 CI/CD Architecture Diagram
+
 ![CI/CD Pipeline Architecture](architecture/ci-cd-architecture.png)
 
 
 
-* 🧱 Technologies Used
-| Tool          | Purpose                            |
-|---------------|-------------------------------------|
-|  GitHub Actions | CI/CD automation               |
-|  Docker         | Containerization of the app   |
-|   Docker Hub       | Image Registry                |
-|   Argo CD          | GitOps Continuous Delivery    |
-|   Kubernetes       | Container Orchestration       |
-|   Git              | Version Control               |
+# 🧱 Technologies Used
+
+| Tool           | Purpose                          |
+| -------------- | -------------------------------- |
+| GitHub Actions | CI/CD Automation                 |
+| Docker         | App Containerization             |
+| Docker Hub     | Docker Image Registry            |
+| Argo CD        | GitOps-based Continuous Delivery |
+| Kubernetes     | Container Orchestration          |
+| Git            | Version Control                  |
 
 
 
- * 🔐 Secrets Required in GitHub
-Make sure to add the following secrets to your GitHub repository:
-- `DOCKER_USERNAME` – Your Docker Hub username
-- `DOCKER_PASSWORD` – Your Docker Hub password or access token
-- `GITOPS_REPO_TOKEN` – GitHub token to push changes to your GitOps repo
+# 🔐 Secrets Required in GitHub
+
+Add the following  repository secrets in GitHub:
+
+* `DOCKER_USERNAME` – Your Docker Hub username
+* `DOCKER_PASSWORD` – Your Docker Hub password or access token
+* `GITOPS_REPO_TOKEN` – GitHub token with access to your GitOps repo
 
 
 
-* 🚀 Deployment Manifest (`gitops-repo/deployment.yaml`)
+# 🚀 Deployment Manifest  (`gitops-repo/deployment.yaml`)
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -71,6 +79,37 @@ spec:
         - name: my-app
           image: yourdockerhub/my-app:<image-tag>
           ports:
-            - containerPort: 3000 ```
+            - containerPort: 3000
+```
+
+
+
+# 🐳 Sample Dockerfile (`docker/Dockerfile`)
+
+```dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+```
+
+
+
+# 📦 GitHub Actions Workflow (`.github/workflows/ci-cd-pipeline.yaml`)
+
+This GitHub Actions workflow performs the following:
+
+* Builds a Docker image tagged with the latest commit SHA.
+* Pushes the image to Docker Hub.
+* Clones and updates the GitOps repo with the new image tag.
+* Argo CD automatically syncs and redeploys the new version in Kubernetes.
 
 
