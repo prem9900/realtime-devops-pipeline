@@ -30,7 +30,7 @@ This project demonstrates a  real-time CI/CD pipeline  that automates the entire
 
 # 📌 CI/CD Architecture Diagram
 
-![CI/CD Pipeline Architecture](architecture/ci-cd-architecture.png)
+![CI/CD Pipeline Architecture](architecture/clean%20architecture%20diagram.png)
 
 
 
