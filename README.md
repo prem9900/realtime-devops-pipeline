@@ -2,23 +2,6 @@
 
 This project demonstrates a  real-time CI/CD pipeline that automates the entire flow from code push to deployment in Kubernetes using GitHub Actions, Docker, Argo CD, and GitOps principles.
 
-
-
-* 📁 Project Structure
-ci-cd-pipeline-demo/
-├── README.md # Project overview and architecture explanation
-├── .github/
-│ └── workflows/
-│ └── ci-cd-pipeline.yaml # GitHub Actions CI/CD workflow
-├── docker/
-│ └── Dockerfile # Dockerfile to build application image
-├── gitops-repo/
-│ └── deployment.yaml # Kubernetes manifest updated by the pipeline
-└── architecture/
-└── ci-cd-architecture.png # Visual architecture of the pipeline
-
-
-
 * 📌 Features
 
 - CI/CD pipeline built using GitHub Actions
