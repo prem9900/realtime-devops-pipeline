@@ -1,0 +1,5 @@
+Developer Pushes Code → GitHub Actions (CI/CD Pipeline) → Build Docker Image
+                                          → Push to Docker Hub
+                                          → Update deployment.yaml in GitOps Repo
+                                          → Argo CD Syncs GitOps Repo
+                                          → Kubernetes Pulls & Deploys New Image

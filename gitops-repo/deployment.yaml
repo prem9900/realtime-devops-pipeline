@@ -1,0 +1,20 @@
+apiVersion: apps/v1                        # API version for Kubernetes deployment
+kind: Deployment                           # This is a Deployment object
+metadata:
+  name: my-app                             # Name of the app (used to identify the deployment)
+  namespace: default                       # Namespace where the app will be deployed (default namespace)
+spec:
+  replicas: 2                              # Number of pod instances to run
+  selector:
+    matchLabels:
+      app: my-app                          # Label to identify which pods this deployment manages
+  template:
+    metadata:
+      labels:
+        app: my-app                        # Label assigned to pods (should match selector above)
+    spec:
+      containers:
+        - name: my-app                     # Name of the container (can be anything)
+          image: yourdockerhub/my-app:<image-tag>   # Docker image to use (tag will be updated by CI/CD pipeline)
+          ports:
+            - containerPort: 3000          # Port on which the app inside the container will run

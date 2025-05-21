@@ -1,0 +1,53 @@
+name: CI/CD Pipeline  # This is the name of the GitHub Actions workflow
+
+on:
+  push:
+    branches:
+      - main          # This workflow runs whenever code is pushed to the 'main' branch
+
+env:
+  IMAGE_NAME: yourdockerhub/my-app  # Set your Docker Hub image name here
+
+jobs:
+  build-and-deploy:  # The job that will build and deploy your app
+    name: Build, Push Docker Image & Update GitOps Repo
+    runs-on: ubuntu-latest  # Run this job on the latest Ubuntu environment
+
+    steps:
+      - name: Checkout app source code
+        uses: actions/checkout@v3  # Pull the latest code from your repository
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2  # Set up Docker Buildx (used for building Docker images)
+
+      - name: Set dynamic image tag
+        id: vars
+        run: echo "IMAGE_TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV  # Create a unique tag using the first 7 characters of the latest commit hash
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2  # Log in to Docker Hub using secrets
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}  # Your Docker Hub username (stored securely)
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Your Docker Hub password (stored securely)
+
+      - name: Build Docker Image
+        run: docker build -t $IMAGE_NAME:${{ env.IMAGE_TAG }} .  # Build the Docker image and tag it with the commit hash
+
+      - name: Push Docker Image
+        run: docker push $IMAGE_NAME:${{ env.IMAGE_TAG }}  # Push the image to Docker Hub
+
+      - name: Clone GitOps repository
+        uses: actions/checkout@v3  # Clone the GitOps repo (where deployment.yaml is stored)
+        with:
+          repository: yourusername/gitops-repo  # Replace this with your actual GitOps repo name
+          token: ${{ secrets.GITOPS_REPO_TOKEN }}  # Use a GitHub token stored in secrets
+          path: gitops-repo  # Clone it into a folder named 'gitops-repo'
+
+      - name: Update deployment.yaml and commit changes
+        run: |
+          cd gitops-repo  # Go into the GitOps repo folder
+          sed -i 's|image:.*|image: '"$IMAGE_NAME:${{ env.IMAGE_TAG }}"'|' deployment.yaml  # Replace the old image tag with the new one
+          git config user.name "github-actions"  # Set Git user name for commit
+          git config user.email "actions@github.com"  # Set Git email for commit
+          git commit -am "Update image to $IMAGE_NAME:${{ env.IMAGE_TAG }}"  # Commit the change
+          git push origin main  # Push the updated file to the GitOps repo
